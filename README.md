@@ -1,70 +1,164 @@
-# Getting Started with Create React App
+# 🚀 React Hello World App (Docker + Kubernetes + CI/CD)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Rancher%20Desktop-blueviolet)
+![CI](https://img.shields.io/badge/CI-GitHub%20Actions-green)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📌 Overview
 
-### `npm start`
+This project is a **Dockerized React application** deployed on **Kubernetes (Rancher Desktop)** with **CI/CD using GitHub Actions (self-hosted runner)**.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Tech Stack
 
-### `npm test`
+* ⚛️ React
+* 🐳 Docker
+* ☸️ Kubernetes (Rancher Desktop)
+* 🔁 GitHub Actions (Self-hosted Runner)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📁 Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+react-hello-world/
+│── public/
+│── src/
+│── Dockerfile
+│── package.json
+│── package-lock.json
+│── reacthelloworld.yaml
+│── .github/workflows/
+│── README.md
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🐳 Docker Setup
 
-### `npm run eject`
+### 🔧 Build Image
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+docker build -t react-hello-app:v1 .
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### ▶️ Run Container
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+docker run -d -p 3000:3000 --name react-container react-hello-app:v1
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 🌐 Access App
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Open in browser:
 
-### Code Splitting
+```
+http://localhost:3000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 📤 Push Image to Docker Hub
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+docker login
+docker tag react-hello-app:v1 <your-dockerhub-username>/react-hello-app:v1
+docker push <your-dockerhub-username>/react-hello-app:v1
+```
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## ☸️ Kubernetes Deployment (Rancher Desktop)
 
-### Advanced Configuration
+### 🔧 Apply Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+kubectl apply -f reacthelloworld.yaml
+```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 🔍 Check Pods
 
-### `npm run build` fails to minify
+```bash
+kubectl get pods
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+### 🌐 Check Services
+
+```bash
+kubectl get services
+```
+
+---
+
+## 🔁 CI/CD Pipeline (GitHub Actions)
+
+This project uses a **self-hosted GitHub runner**.
+
+### ✅ Pipeline Steps
+
+* Build Docker Image
+* Tag Image (`v1`)
+* Push to Docker Hub
+* Deploy to Kubernetes
+
+---
+
+## 🖼️ Screenshots
+
+> Add your screenshots inside a `screenshots/` folder
+
+### 🐳 Docker Build
+
+![Docker Build](screenshots/docker-build.png)
+
+### ▶️ Running Container
+
+![Container](screenshots/container-running.png)
+
+### ☸️ Kubernetes Pods
+
+![Pods](screenshots/k8s-pods.png)
+
+---
+
+## 🧠 Key Concepts
+
+* Docker Image vs Container
+* Port Mapping
+* Kubernetes Deployment & Service
+* CI/CD Automation
+
+---
+
+## 🧹 Cleanup
+
+```bash
+docker rm -f react-container
+kubectl delete -f reacthelloworld.yaml
+```
+
+---
+
+## 👩‍💻 Author
+
+Your Name
+
+---
+
+## ⭐ Learning Outcome
+
+* Dockerize a React App
+* Push image to Docker Hub
+* Deploy on Kubernetes (Rancher Desktop)
+* Automate using GitHub Actions
